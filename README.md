@@ -360,7 +360,7 @@ This project is licensed under the MIT License.
 
 ## 👨‍💻 Author
 
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter)
+Arif Adnan - [Linkedin](https://www.linkedin.com/in/arifadnan05/)
 
 ## 🙏 Acknowledgments
 
@@ -370,4 +370,4 @@ Your Name - [@yourtwitter](https://twitter.com/yourtwitter)
 
 ---
 
-Made with ❤️ using Next.js 15+, MongoDB
+Made with Arif Adnan using Next.js 15+, MongoDB
