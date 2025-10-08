@@ -1,14 +1,12 @@
 import { NextResponse, NextRequest } from "next/server";
-import { jwtVerify } from "jose";
+import { jwtVerify, JWTPayload } from "jose";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
   const { pathname } = req.nextUrl;
-
   const publicRoutes = ["/login", "/register"];
-
   const isPublicRoute = publicRoutes.some((route) =>
     pathname.startsWith(route)
   );
@@ -20,7 +18,15 @@ export async function middleware(req: NextRequest) {
   if (token) {
     try {
       const secret = new TextEncoder().encode(JWT_SECRET);
-      await jwtVerify(token, secret);
+
+      // Verify and decode token
+      const { payload }: { payload: JWTPayload } = await jwtVerify(
+        token,
+        secret
+      );
+      if (payload.role === "admin" && pathname !== "/dashboard") {
+        return NextResponse.redirect(new URL("/dashboard", req.url));
+      }
       return NextResponse.next();
     } catch (error) {
       console.error("Invalid token:", error);

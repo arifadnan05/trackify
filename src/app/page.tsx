@@ -1,3 +1,7 @@
+import UserSlotsPage from "@/components/user/UserSlotsPage";
+
 export default function Home() {
-  return <div>This is Dashboard</div>;
+  return <div>
+    <UserSlotsPage />
+  </div>;
 }

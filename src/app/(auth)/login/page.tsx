@@ -2,6 +2,7 @@
 
 import { loginUser } from "@/app/actions/auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -9,10 +10,12 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string>("");
 
+  const router = useRouter();
+
   const handleLogin = async (formData: FormData) => {
     try {
       await loginUser(formData);
-      window.location.href = "/";
+      router.push("/");
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -84,7 +87,13 @@ export default function LoginPage() {
         </form>
 
         <p className="text-sm text-gray-600 text-center mt-4">
-          Don’t have an account? <Link href="/register" className="text-blue-600 hover:underline font-medium">Register</Link>
+          Don’t have an account?{" "}
+          <Link
+            href="/register"
+            className="text-blue-600 hover:underline font-medium"
+          >
+            Register
+          </Link>
         </p>
       </div>
     </div>

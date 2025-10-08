@@ -22,7 +22,11 @@ export async function registerUser(formData: FormData) {
   const passwordHash = await hashPassword(password);
   const result = await createUser({ name, email, passwordHash });
 
-  const token = createJWT({ sub: result.insertedId.toString(), email });
+  const token = createJWT({
+    id: result.insertedId.toString(),
+    email,
+    role: "user",
+  });
   const cookieStore = await cookies();
   cookieStore.set("token", token, {
     httpOnly: true,
@@ -43,7 +47,11 @@ export async function loginUser(formData: FormData) {
   const ok = await verifyPassword(password, user.password);
   if (!ok) throw new Error("Invalid credentials");
 
-  const token = createJWT({ sub: user._id?.toString(), email });
+  const token = createJWT({
+    id: user._id?.toString(),
+    email,
+    role: user.role,
+  });
   const cookieStore = await cookies();
   cookieStore.set("token", token, {
     httpOnly: true,
